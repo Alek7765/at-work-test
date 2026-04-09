@@ -1,0 +1,16 @@
+.section {
+  padding-top: var(--section-padding-y);
+}
+
+.list {
+  --listColumns: 3;
+
+  display: grid;
+  grid-template-columns: repeat(var(--listColumns), 1fr);
+  gap: fluid(40, 20);
+  padding-top: fluid(28, 16);
+
+  @include tablet {
+    --listColumns: 2;
+  }
+}

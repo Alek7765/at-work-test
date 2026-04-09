@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { UserFormData } from '../types/user';
+import { UserFormData } from '@/types/user';
 
 interface UserStore {
   archivedIds: number[];

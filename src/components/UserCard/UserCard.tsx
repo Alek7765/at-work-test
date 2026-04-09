@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { User } from '../../types/user';
-import { MoreVertical, Edit2, Archive, ArchiveRestore, EyeOff, MapPin, Building2 } from 'lucide-react';
+import { User } from '@/types/user';
+import { MoreVertical } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import styles from './UserCard.module.scss';
+import clsx from "clsx";
+import avatarImgSrc from '@/assets/images/avatar-s.jpg'
 
 interface UserCardProps {
   user: User;
@@ -12,7 +14,7 @@ interface UserCardProps {
   onHide?: (id: number) => void;
 }
 
-export const UserCard = ({ user, isArchived, onArchive, onRestore, onHide }: UserCardProps) => {
+export default ({ user, isArchived, onArchive, onRestore, onHide }: UserCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -33,75 +35,69 @@ export const UserCard = ({ user, isArchived, onArchive, onRestore, onHide }: Use
   };
 
   return (
-    <div className={`${styles.card} ${isArchived ? styles.archived : ''}`}>
-      <div className={styles.header}>
-        <div className={styles.avatar}>
-          <img src={user.avatar} alt={user.username} />
-        </div>
-        <div className={styles.menuWrapper} ref={menuRef}>
-          <button 
-            className={styles.menuBtn}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Опции"
-          >
-            <MoreVertical size={20} />
-          </button>
-          
-          {isMenuOpen && (
-            <div className={styles.dropdown}>
-              {!isArchived && (
-                <button onClick={handleEdit} className={styles.menuItem}>
-                  <Edit2 size={16} />
-                  <span>Редактировать</span>
-                </button>
-              )}
-              
-              {isArchived ? (
-                <button 
-                  onClick={() => { setIsMenuOpen(false); onRestore?.(user.id); }} 
-                  className={styles.menuItem}
-                >
-                  <ArchiveRestore size={16} />
-                  <span>Активировать</span>
-                </button>
-              ) : (
-                <button 
-                  onClick={() => { setIsMenuOpen(false); onArchive?.(user.id); }} 
-                  className={styles.menuItem}
-                >
-                  <Archive size={16} />
-                  <span>Архивировать</span>
-                </button>
-              )}
-              
-              {!isArchived && (
-                <button 
-                  onClick={() => { setIsMenuOpen(false); onHide?.(user.id); }} 
-                  className={`${styles.menuItem} ${styles.danger}`}
-                >
-                  <EyeOff size={16} />
-                  <span>Скрыть</span>
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-      
+    <div
+      className={clsx(
+        styles.card,
+        isArchived && styles.isArchived
+      )}
+    >
+      <img
+        className={styles.image}
+        src={avatarImgSrc}
+        alt={user.name}
+        width="112"
+        height="120"
+      />
       <div className={styles.content}>
-        <h3 className={styles.username}>@{user.username}</h3>
-        <p className={styles.name}>{user.name}</p>
-        
-        <div className={styles.details}>
-          <div className={styles.detailItem}>
-            <MapPin size={16} />
-            <span>{user.address.city}</span>
-          </div>
-          <div className={styles.detailItem}>
-            <Building2 size={16} />
-            <span>{user.company.name}</span>
+        <div className={styles.header}>
+          <h3 className={styles.nickname}>{user.username}</h3>
+          <div className={styles.menuWrapper} ref={menuRef}>
+            <button
+              className={styles.menuBtn}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Опции"
+            >
+              <MoreVertical size={20} />
+            </button>
+
+            {isMenuOpen && (
+              <div className={styles.dropdown}>
+                {!isArchived && (
+                  <button onClick={handleEdit} className={styles.menuItem}>
+                    <span>Редактировать</span>
+                  </button>
+                )}
+
+                {isArchived ? (
+                  <button
+                    onClick={() => { setIsMenuOpen(false); onRestore?.(user.id); }}
+                    className={styles.menuItem}
+                  >
+                    <span>Активировать</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => { setIsMenuOpen(false); onArchive?.(user.id); }}
+                    className={styles.menuItem}
+                  >
+                    <span>Архивировать</span>
+                  </button>
+                )}
+
+                {!isArchived && (
+                  <button
+                    onClick={() => { setIsMenuOpen(false); onHide?.(user.id); }}
+                    className={styles.menuItem}
+                  >
+                    <span>Скрыть</span>
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
+        <span className={styles.name}>{user.company.name}</span>
+        <span className={styles.city}>{user.address.city}</span>
       </div>
     </div>
   );

@@ -8,10 +8,8 @@ export const fetchUsers = async (): Promise<User[]> => {
     throw new Error('Failed to fetch users');
   }
   const data = await response.json();
-  // Return only the first 6 users as required
   return data.slice(0, 6).map((user: any) => ({
     ...user,
-    // Add a placeholder avatar
     avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random&color=fff&size=150`
   }));
 };

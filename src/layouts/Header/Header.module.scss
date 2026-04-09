@@ -1,0 +1,24 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-06);
+  padding: 16px 0;
+}
+
+.headerContent,
+.headerPanel,
+.headerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerContent,
+.headerPanel {
+  column-gap: 20px;
+}
+
+.headerActions {
+  column-gap: 10px;
+}

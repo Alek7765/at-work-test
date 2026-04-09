@@ -1,0 +1,27 @@
+.button {
+  @include flex-center(true);
+
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+
+  @include hover {
+    color: var(--color-06);
+    background-color: var(--color-accent);
+  }
+
+  &:active {
+    scale: 1.05;
+  }
+
+  &:has(svg:only-child) {
+
+    border-radius: 4px;
+    padding: 4px;
+    color: var(--color-02);
+    background-color: transparent;
+  }
+
+}

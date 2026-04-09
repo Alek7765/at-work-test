@@ -1,73 +1,57 @@
 .overlay {
+  @include flex-center;
+
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: rgba(22, 22, 22, 0.24);
   z-index: 1000;
   opacity: 0;
-  transition: opacity var(--transition-normal);
+  transition: opacity var(--transition-duration);
   backdrop-filter: blur(2px);
 
-  &.open {
+  &.isOpen {
     opacity: 1;
   }
 }
 
 .popup {
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  width: 90%;
-  max-width: 400px;
-  display: flex;
-  align-items: flex-start;
+  @include flex-column;
+
+  position: relative;
   gap: 16px;
-  box-shadow: var(--shadow-lg);
+  width: fluid(310, 271);
+  border-radius: var(--border-radius-l);
+  padding: 18px;
+  background-color: var(--color-06);
   transform: translateY(20px) scale(0.95);
   opacity: 0;
-  transition: all var(--transition-normal);
-  position: relative;
+  transition: all var(--transition-duration);
 
-  &.open {
+  &.isOpen {
     transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
 
-.iconWrapper {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon {
-  width: 28px;
-  height: 28px;
-  color: var(--color-success);
+.buttonClose {
+  align-self: end;
 }
 
 .content {
-  flex-grow: 1;
-}
+  @include flex-column(fluid(20, 16));
 
-.title {
-  margin: 0 0 4px;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-text-primary);
+  align-items: center;
+  text-align: center;
+  padding-bottom: fluid(22, 14);
 }
 
 .message {
-  margin: 0;
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  line-height: 1.4;
+  font-weight: 600;
+  font-size: fluid(20, 18);
+  color: var(--color-02);
 }
 
 .closeBtn {

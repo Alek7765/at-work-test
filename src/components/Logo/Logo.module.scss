@@ -1,0 +1,33 @@
+.logo {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.logoImage {
+  @include square(24px);
+
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logoTitle {
+  font-family: var(--font-family-second);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 81%;
+  color: #333153;
+  transition-duration: var(--transition-duration);
+
+  @include hover {
+    color: var(--color-accent);
+  }
+
+  &Small {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-02);
+  }
+}

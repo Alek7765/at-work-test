@@ -1,0 +1,63 @@
+html {
+  &.is-lock {
+    overflow: hidden;
+  }
+}
+
+body {
+  @include flex-column;
+  @include fluid-text(14, 10);
+
+  font-family: var(--font-family-base);
+  color: var(--color-03);
+  background-color: var(--color-05);
+}
+
+main {
+  @include flex-column;
+
+  min-height: 100vh;
+  flex-grow: 1;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5 {
+  font-weight: 600;
+}
+
+
+a,
+button,
+label,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: inherit;
+
+  @include hover {
+    color: var(--color-accent);
+  }
+
+  &[class] {
+    text-decoration: none;
+  }
+}
+
+:focus-visible {
+  @include focus-visible;
+}
+
+
+
+
+
+
+

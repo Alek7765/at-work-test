@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CheckCircle2, X } from 'lucide-react';
 import styles from './Popup.module.scss';
+import clsx from "clsx";
+import Button from "@/components/Button/Button.tsx";
+import checkImgSrc from '@/assets/check.svg'
 
 interface PopupProps {
   message: string;
@@ -20,7 +22,6 @@ export const Popup = ({ message, isOpen, onClose }: PopupProps) => {
       }, 4000);
       return () => clearTimeout(timer);
     } else {
-      // Small delay for fade out animation
       const timer = setTimeout(() => setIsRendered(false), 300);
       return () => clearTimeout(timer);
     }
@@ -29,21 +30,29 @@ export const Popup = ({ message, isOpen, onClose }: PopupProps) => {
   if (!isRendered) return null;
 
   return createPortal(
-    <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`} onClick={onClose}>
+    <div className={clsx(styles.overlay, isOpen && styles.isOpen)} onClick={onClose}>
       <div 
-        className={`${styles.popup} ${isOpen ? styles.open : ''}`} 
+        className={`${styles.popup} ${isOpen ? styles.isOpen : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.iconWrapper}>
-          <CheckCircle2 className={styles.icon} />
-        </div>
+        <Button
+          className={styles.buttonClose}
+          label="Закрыть"
+          iconName="X"
+          isLabelHidden
+          extraAttrs={{ onClick: onClose }}
+        />
         <div className={styles.content}>
-          <h3 className={styles.title}>Успешно</h3>
+          <img
+            className={styles.imageCheck}
+            src={checkImgSrc}
+            alt=""
+            width={60}
+            height={60}
+          />
           <p className={styles.message}>{message}</p>
         </div>
-        <button onClick={onClose} className={styles.closeBtn} aria-label="Закрыть">
-          <X className={styles.closeIcon} />
-        </button>
+
       </div>
     </div>,
     document.body
